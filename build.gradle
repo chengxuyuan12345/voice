@@ -4,6 +4,7 @@ buildscript {
         maven { url 'https://www.jitpack.io' }
         google()
         mavenCentral()
+        credentials { username authToken }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.2"
