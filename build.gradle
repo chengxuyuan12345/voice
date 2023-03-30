@@ -1,10 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
-        maven {
-            url 'https://jitpack.io'
-            credentials { username authToken }
-        }
+        maven { url 'https://www.jitpack.io' }
         google()
         mavenCentral()
     }
