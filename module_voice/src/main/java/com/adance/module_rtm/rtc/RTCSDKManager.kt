@@ -115,6 +115,20 @@ class RTCSDKManager {
     }
 
     /**
+     * 切换前置后置摄像头
+     */
+    fun setSwitchCamera(enabled: Boolean){
+        if (rtc.isNullOrEmpty()) {
+            return
+        }
+        if (rtc == RTC_AGORA) {
+            AgoraRtcSdkManager.instance()?.setSwitchCamera()
+        } else if (rtc == RTC_ZEGO) {
+            ZegoRtcSdkManager.instance()?.setSwitchCamera(enabled)
+        }
+    }
+
+    /**
      * 开启视频
      */
     fun startEnableVideo() {
@@ -241,6 +255,105 @@ class RTCSDKManager {
             AgoraRtcSdkManager.instance()?.setVoiceConversionPreset(preset)
         } else if (rtc == RTC_ZEGO) {
             ZegoRtcSdkManager.instance()?.setVoiceConversionPreset(preset)
+        }
+    }
+
+    fun createMediaPlayer(){
+        if (rtc.isNullOrEmpty()) {
+            return
+        }
+        if (rtc == RTC_ZEGO){
+            ZegoRtcSdkManager.instance()?.createMediaPlayer()
+        }
+    }
+
+    fun playMusic(filepath: String?, cycle: Int) {
+        if (rtc.isNullOrEmpty()) {
+            return
+        }
+        if (rtc == RTC_AGORA){
+            AgoraRtcSdkManager.instance()?.playMusic(filepath,cycle)
+        }else if (rtc == RTC_ZEGO){
+            ZegoRtcSdkManager.instance()?.playMusic(filepath)
+        }
+    }
+
+    fun stopMusic() {
+        if (rtc.isNullOrEmpty()) {
+            return
+        }
+        if (rtc == RTC_AGORA){
+            AgoraRtcSdkManager.instance()?.stopMusic()
+        }else if (rtc == RTC_ZEGO){
+            ZegoRtcSdkManager.instance()?.stopMusic()
+        }
+    }
+
+    fun pauseMusic() {
+        if (rtc.isNullOrEmpty()) {
+            return
+        }
+        if (rtc == RTC_AGORA){
+            AgoraRtcSdkManager.instance()?.pauseMusic()
+        }else if (rtc == RTC_ZEGO){
+            ZegoRtcSdkManager.instance()?.pauseMusic()
+        }
+    }
+
+    fun resumeMusic() {
+        if (rtc.isNullOrEmpty()) {
+            return
+        }
+        if (rtc == RTC_AGORA){
+            AgoraRtcSdkManager.instance()?.resumeMusic()
+        }else if (rtc == RTC_ZEGO){
+            ZegoRtcSdkManager.instance()?.resumeMusic()
+        }
+    }
+
+    fun setMusicVolumeRtc(volume: Int) {
+        if (rtc.isNullOrEmpty()) {
+            return
+        }
+        if (rtc == RTC_AGORA){
+            AgoraRtcSdkManager.instance()?.setMusicVolumeRtc(volume)
+        }else if (rtc == RTC_ZEGO){
+            ZegoRtcSdkManager.instance()?.setMusicVolumeRtc(volume)
+        }
+    }
+
+    fun getMusicDuration(): Float? {
+        if (rtc.isNullOrEmpty()) {
+            return 0f
+        }
+        if (rtc == RTC_AGORA){
+            return AgoraRtcSdkManager.instance()?.getMusicDuration()
+        }else if (rtc == RTC_ZEGO){
+            return ZegoRtcSdkManager.instance()?.getMusicDuration()
+        }
+        return 0f
+    }
+
+    fun getMusicCurrentPosition(): Float? {
+        if (rtc.isNullOrEmpty()) {
+            return 0f
+        }
+        if (rtc == RTC_AGORA){
+            return AgoraRtcSdkManager.instance()?.getMusicCurrentPosition()
+        }else if (rtc == RTC_ZEGO){
+            return ZegoRtcSdkManager.instance()?.getMusicCurrentPosition()
+        }
+        return 0f
+    }
+
+    fun setMusicPosition(startPos: Long) {
+        if (rtc.isNullOrEmpty()) {
+            return
+        }
+        if (rtc == RTC_AGORA){
+            AgoraRtcSdkManager.instance()?.setMusicPosition(startPos)
+        }else if (rtc == RTC_ZEGO){
+            ZegoRtcSdkManager.instance()?.setMusicPosition(startPos)
         }
     }
 

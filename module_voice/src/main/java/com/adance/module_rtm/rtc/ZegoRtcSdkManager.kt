@@ -13,6 +13,7 @@ import com.adance.module_rtm.rtc.RTCSDKManager.Companion.mUserJoinedCallback
 import com.adance.module_rtm.rtc.RTCSDKManager.Companion.mUserLeftCallback
 import com.adance.module_rtm.rtc.RTCSDKManager.Companion.mUserOfflineCallback
 import im.zego.zegoexpress.ZegoExpressEngine
+import im.zego.zegoexpress.ZegoMediaPlayer
 import im.zego.zegoexpress.callback.IZegoEventHandler
 import im.zego.zegoexpress.constants.*
 import im.zego.zegoexpress.entity.*
@@ -41,6 +42,7 @@ class ZegoRtcSdkManager {
     }
 
     private var mEngine: ZegoExpressEngine? = null
+    private var zegoMediaPlayer: ZegoMediaPlayer? = null
 
     /**
      * 创建引擎
@@ -98,7 +100,6 @@ class ZegoRtcSdkManager {
                 extendedData: JSONObject?,
             ) {
                 super.onPublisherStateUpdate(streamID, state, errorCode, extendedData)
-                Log.e("TAG","============"+state+"========="+errorCode)
                 if (errorCode == 0) {
                     if (state == ZegoPublisherState.PUBLISHING) {
                         mClientRoleChangedCallback?.onClientRoleChangedAnchor()
@@ -202,6 +203,14 @@ class ZegoRtcSdkManager {
     }
 
     /**
+     * 切换前置后置摄像头
+     */
+    fun setSwitchCamera(enabled: Boolean) {
+        mEngine?.useFrontCamera(enabled)
+    }
+
+
+    /**
      * 开启视频
      */
     fun startEnableVideo() {
@@ -278,6 +287,50 @@ class ZegoRtcSdkManager {
         mEngine?.setVoiceChangerPreset(zegoVoiceChangerPreset)
         return 0
     }
+
+    fun createMediaPlayer() {
+        if (zegoMediaPlayer == null){
+            zegoMediaPlayer = mEngine?.createMediaPlayer()
+            zegoMediaPlayer?.enableAux(true)
+        }
+    }
+
+    fun playMusic(filepath: String?) {
+        zegoMediaPlayer?.loadResource(filepath) {
+            if (it == 0){
+                zegoMediaPlayer?.start()
+            }
+        }
+    }
+
+    fun stopMusic() {
+        zegoMediaPlayer?.stop()
+    }
+
+    fun pauseMusic() {
+        zegoMediaPlayer?.pause()
+    }
+
+    fun resumeMusic() {
+        zegoMediaPlayer?.resume()
+    }
+
+    fun setMusicVolumeRtc(volume: Int) {
+        zegoMediaPlayer?.setVolume(volume)
+    }
+
+    fun getMusicDuration(): Float {
+        return zegoMediaPlayer?.totalDuration?.toFloat() ?: 0f
+    }
+
+    fun getMusicCurrentPosition(): Float {
+        return zegoMediaPlayer?.currentProgress?.toFloat() ?: 0f
+    }
+
+    fun setMusicPosition(millisecond: Long) {
+        zegoMediaPlayer?.seekTo(millisecond) {}
+    }
+
 
     /**
      * 销毁RtcEngine
